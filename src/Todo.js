@@ -7,7 +7,7 @@ const Todo = ({title, description, complete, markComplete, remove, editing}) => 
       <h1>{title}</h1>
       <p>{description}</p>
       <button onClick={markComplete}>
-        {complete ? "Complete" : "Incomplete"}
+        {complete ? "Incomplete" : "Complete"}
       </button>
       <button onClick={remove}>
         X
