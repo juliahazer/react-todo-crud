@@ -45,11 +45,7 @@ class TodoList extends Component {
     var todos = this.state.todos.slice();
     for (var i = 0; i < todos.length; i++){
       if (todos[i].id === id){
-        if (todos[i].complete === true){
-          todos[i].complete = false;
-        } else {
-          todos[i].complete = true;
-        }
+        todos[i].complete = !todos[i].complete;
         break;
       }
     }
@@ -71,11 +67,7 @@ class TodoList extends Component {
     var todos = this.state.todos.slice();
     for (var i = 0; i < todos.length; i++){
       if (todos[i].id === id){
-        if (todos[i].editing === true){
-          todos[i].editing = false;
-        } else {
-          todos[i].editing = true;
-        }
+        todos[i].editing = !todos[i].editing;
         break;
       }
     }
@@ -86,11 +78,7 @@ class TodoList extends Component {
     var todos = this.state.todos.slice();
     for (var i = 0; i < todos.length; i++){
       if (todos[i].id === id){
-        if (todos[i].editing === true){
-          todos[i].editing = false;
-        } else {
-          todos[i].editing = true;
-        }
+        todos[i].editing = !todos[i].editing;
         break;
       }
     }
