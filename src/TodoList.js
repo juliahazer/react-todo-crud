@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import './TodoList.css';
 import Todo from './Todo';
 import NewTodoForm from './NewTodoForm';
 import EditTodoForm from './EditTodoForm';
@@ -9,9 +8,9 @@ class TodoList extends Component {
     super(props);
     this.state = {
       todos: [
-        {id: 1, title: "Learn React", description: "Complete all the coursework on the Rithm website.", complete: false, editing: false},
+        {id: 1, title: "CRUD on Todo List", description: "Use React to finish building CRUD on todo list.", complete: false, editing: false},
         {id: 2, title: "Solo Project", description: "Go back and address feedback.", complete: false, editing: false},
-        {id: 3, title: "Practice Node", description: "Build an app using Node.", complete: false, editing: false}
+        {id: 3, title: "Final React Project", description: "Build a game using React and upload to GitHub.", complete: false, editing: false}
       ]
     }
   }
