@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import './Todo.css';
+import './TodoBox.css';
 
-class EditTodoForm extends Component {
+class TodoForm extends Component {
   constructor(props){
     super(props);
     this.state = {
@@ -18,14 +18,32 @@ class EditTodoForm extends Component {
   }
 
   render() {
+    //defaults for add form
+    var classVal = "";
+    var formTitle = "Add a";
+    var submitBtnText = "Add a New Todo"
+    var cancelBtn = null;
+
+    //switch defaults if an edit form
+    if (this.props.type === 'edit'){
+      classVal += "TodoBox EditTodoForm";
+      formTitle = "Edit";
+      submitBtnText = "Edit"
+      cancelBtn = <button onClick={this.props.cancelTodo}>Cancel</button>;
+    } 
+
     return (
-      <div className="TodoBox EditTodoForm">
+      <div className={classVal}>
         <form onSubmit={(e) => {
           e.preventDefault();
-          this.props.editTodo(this.state.title, this.state.description);
+          this.props.actionTodo(this.props.type, this.state.title, this.state.description);
+          this.setState({
+            title: "",
+            description: ""
+          })
         }}>
-          <h4>Edit this Todo Item:</h4>
-          <label for="title">Title:</label>
+          <h4>{formTitle} Todo Item:</h4>
+          <label htmlFor="title">Title:</label>
           <input 
             className='inputs'
             type="text" 
@@ -35,7 +53,7 @@ class EditTodoForm extends Component {
             placeholder="title" 
             value={this.state.title}>
           </input>
-          <label for="description">Description: </label>
+          <label htmlFor="description">Description: </label>
           <input 
             className='inputs'
             type="text" 
@@ -45,12 +63,12 @@ class EditTodoForm extends Component {
             onChange={this.handleChange}
             value={this.state.description}>
           </input>
-          <input type="submit" value="Edit"></input>
-          <button onClick={this.props.cancelTodo}>Cancel</button>
+          <input type="submit" value={submitBtnText}></input>
+          {cancelBtn}
         </form>
       </div>
     )
   }
 }
 
-export default EditTodoForm;
+export default TodoForm;

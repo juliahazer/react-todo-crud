@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Todo from './Todo';
-import NewTodoForm from './NewTodoForm';
-import EditTodoForm from './EditTodoForm';
+import TodoForm from './TodoForm';
+// import EditTodoForm from './EditTodoForm';
 
 class TodoList extends Component {
   constructor(props){
@@ -15,32 +15,32 @@ class TodoList extends Component {
     }
   }
 
-  handleSubmit(e, title, description){
+  handleSubmit(id, type, title, description){
     var todos = this.state.todos.slice();
-    var lastId = todos[todos.length-1].id;
-    todos.push({
-      id: ++lastId,
-      title: title,
-      description: description,
-      complete: false,
-      editing: false
-    });
-    this.setState({todos});
-  }
-
-  handleEditSubmit(id, title, description){
-    var todos = this.state.todos.slice();
-    for (var i = 0; i < todos.length; i++){
-      if (todos[i].id === id){
-        todos[i].editing = false;
-        todos[i].title = title;
-        todos[i].description = description;
-        break;
+    //if submitting an edit form
+    if (type === 'edit'){
+      for (var i = 0; i < todos.length; i++){
+        if (todos[i].id === id){
+          todos[i].editing = false;
+          todos[i].title = title;
+          todos[i].description = description;
+          break;
+        }
       }
+    } else { //submitting an add form
+      var lastId = todos[todos.length-1].id;
+      todos.push({
+        id: ++lastId,
+        title: title,
+        description: description,
+        complete: false,
+        editing: false
+      });
     }
     this.setState({todos});
   }
 
+  //switch state of todo item (complete/incomplete)
   changeComplete(id) {
     var todos = this.state.todos.slice();
     for (var i = 0; i < todos.length; i++){
@@ -52,6 +52,7 @@ class TodoList extends Component {
     this.setState({todos});
   }
 
+  //delete a todo item
   removeIt(id){
     var todos = this.state.todos.slice();
     for (var i = 0; i < todos.length; i++){
@@ -63,17 +64,7 @@ class TodoList extends Component {
     this.setState({todos});
   }
 
-  cancelEdit(id){
-    var todos = this.state.todos.slice();
-    for (var i = 0; i < todos.length; i++){
-      if (todos[i].id === id){
-        todos[i].editing = !todos[i].editing;
-        break;
-      }
-    }
-    this.setState({todos});
-  }
-
+  //switches editing state of todo item (true/false)
   changeEdit(id){
     var todos = this.state.todos.slice();
     for (var i = 0; i < todos.length; i++){
@@ -93,15 +84,17 @@ class TodoList extends Component {
           title={el.title} 
           description={el.description} 
           complete={el.complete}
-          markComplete={this.changeComplete.bind(this,el.id)}
-          remove={this.removeIt.bind(this,el.id)}
-          editing={this.changeEdit.bind(this,el.id)}
+          markComplete={this.changeComplete.bind(this, el.id)}
+          remove={this.removeIt.bind(this, el.id)}
+          editing={this.changeEdit.bind(this, el.id)}
         />);
       } else {
         return (
-          <EditTodoForm key={el.id} 
-            editTodo={this.handleEditSubmit.bind(this, el.id)}
-            cancelTodo={this.cancelEdit.bind(this, el.id)}
+          <TodoForm 
+            key={el.id} 
+            type="edit"
+            actionTodo={this.handleSubmit.bind(this, el.id)}
+            cancelTodo={this.changeEdit.bind(this, el.id)}
             id = {el.id}
             title={el.title}
             description={el.description}
@@ -113,7 +106,13 @@ class TodoList extends Component {
       <div>
         <h1>Here is your todo list:</h1>
         {todos}
-        <NewTodoForm key='1' addTodo={this.handleSubmit.bind(this)}/>
+        <TodoForm 
+          key='0' 
+          type="add"
+          actionTodo={this.handleSubmit.bind(this, null)} 
+          title = ""
+          description = ""
+        />
       </div>
     )
   }

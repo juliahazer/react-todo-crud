@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import './Todo.css';
+import React from 'react';
+import './TodoBox.css';
 
 const Todo = ({title, description, complete, markComplete, remove, editing}) => {
   return (
