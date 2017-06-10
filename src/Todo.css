@@ -1,0 +1,17 @@
+.TodoBox {
+  background-color: lightgray;
+  border: 1px solid black;
+  margin: 10px auto;
+  max-width: 400px;
+  padding: 10px;
+}
+
+.EditTodoForm .inputs {
+  display: block;
+  width: 300px;
+  margin: 10px auto;
+}
+
+.complete {
+  text-decoration: line-through;
+}
