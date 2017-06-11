@@ -7,11 +7,19 @@ class TodoList extends Component {
   constructor(props){
     super(props);
     this.state = {
-      todos: [
-        {id: 1, title: "CRUD on Todo List", description: "Use React to finish building CRUD on todo list.", complete: false, editing: false},
-        {id: 2, title: "Solo Project", description: "Go back and address feedback.", complete: false, editing: false},
-        {id: 3, title: "Final React Project", description: "Build a game using React and upload to GitHub.", complete: false, editing: false}
-      ]
+      todos: []
+    }
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.componentWillMount = this.componentWillMount.bind(this);
+  }
+
+  componentWillMount(){
+    var cachedTodos = localStorage.getItem('todos');
+    cachedTodos = JSON.parse(cachedTodos);
+    if (cachedTodos){
+      this.setState({
+        todos: cachedTodos
+      })
     }
   }
 
@@ -28,15 +36,22 @@ class TodoList extends Component {
         }
       }
     } else { //submitting an add form
-      var lastId = todos[todos.length-1].id;
+      var newId; 
+      if (todos.length < 1){
+        newId = 1;
+      } else {
+        newId = todos[todos.length-1].id;
+        newId++;
+      }
       todos.push({
-        id: ++lastId,
+        id: newId,
         title: title,
         description: description,
         complete: false,
         editing: false
       });
     }
+    localStorage.setItem('todos', JSON.stringify(todos))
     this.setState({todos});
   }
 
@@ -49,6 +64,7 @@ class TodoList extends Component {
         break;
       }
     }
+    localStorage.setItem('todos', JSON.stringify(todos))
     this.setState({todos});
   }
 
@@ -61,6 +77,7 @@ class TodoList extends Component {
       }
     }
     todos.splice(i, 1);
+    localStorage.setItem('todos', JSON.stringify(todos))
     this.setState({todos});
   }
 

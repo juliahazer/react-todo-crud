@@ -11,6 +11,14 @@ class TodoForm extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  addFocus() {
+    this.input.focus();
+  }
+
+  componentDidMount(){
+    this.input.focus();
+  }
+
   handleChange(e){
     this.setState({
       [e.target.name]: e.target.value
@@ -40,7 +48,8 @@ class TodoForm extends Component {
           this.setState({
             title: "",
             description: ""
-          })
+          });
+          this.addFocus();
         }}>
           <h4>{formTitle} Todo Item:</h4>
           <label htmlFor="title">Title:</label>
@@ -50,6 +59,7 @@ class TodoForm extends Component {
             name="title" 
             id="title"
             onChange={this.handleChange}
+            ref={el => this.input = el}
             placeholder="title" 
             value={this.state.title}>
           </input>
