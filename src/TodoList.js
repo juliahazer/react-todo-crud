@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Todo from './Todo';
 import TodoForm from './TodoForm';
-// import EditTodoForm from './EditTodoForm';
 
 class TodoList extends Component {
   constructor(props){
